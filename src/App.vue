@@ -1,29 +1,113 @@
 <template>
-  <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view/>
-  </div>
+  <v-app>
+    <v-app-bar app elevate-on-scroll>
+        <v-app-bar-nav-icon @click.native.stop="navBarMenu = ! navBarMenu" 
+          class="hidden-sm-and-up">
+        </v-app-bar-nav-icon>
+        <v-toolbar-title class="headline text-uppercase">
+          <span>Tasks</span>
+          <span class="font-weight-light"></span>
+        </v-toolbar-title>
+        <div class="flex-grow-1"></div>
+        <v-toolbar-items class="hidden-xs-only">
+          <v-btn v-for="item in menuItems" v-bind:key="item.title"
+            text
+            :to=item.url
+            small>
+            <v-icon left>{{item.icon}}</v-icon>
+            <span class="mr-2">{{item.title}}</span>
+          </v-btn>
+        </v-toolbar-items>
+        
+    </v-app-bar>
+
+    <v-content >
+
+      <v-navigation-drawer
+          v-model="navBarMenu"
+          absolute
+          temporary
+        >
+          <v-list-item>
+            <v-list-item-content>
+              <v-list-item-title>Ações</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+
+          <v-divider></v-divider>
+
+          <v-list dense>
+
+            <v-list-item
+              link
+              v-for="item in menuItems" v-bind:key="item.title"
+              :to=item.url
+            >
+              <v-list-item-icon>
+                <v-icon>{{item.icon}}</v-icon>
+              </v-list-item-icon>
+
+              <v-list-item-content>
+                <v-list-item-title>{{item.title}}</v-list-item-title>
+              </v-list-item-content>
+            </v-list-item>
+          </v-list>
+        </v-navigation-drawer>
+        <v-container >
+          <v-row class="d-flex justify-center">
+            <v-alert type="error" v-if="this.authError !== null" dismissible @click="clearAuthError">
+              {{ this.authError.message }}
+            </v-alert>
+            <v-col cols="12">
+              <router-view ></router-view>
+            </v-col>
+          </v-row>
+        </v-container>
+    </v-content>
+  </v-app>
 </template>
 
-<style lang="scss">
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-#nav {
-  padding: 30px;
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-    &.router-link-exact-active {
-      color: #42b983;
-    }
-  }
-}
-</style>
+<script>
+  import { mapGetters, mapActions } from 'vuex'
+
+  export default {
+
+    name: 'App',
+    data: () => ({
+      navBarMenu: false,
+    }),
+    methods: {
+      ...mapActions('Accounts', ['clearAuthError']),
+    },
+    computed: {
+      ...mapGetters('Accounts', ['loggedUser', 'authError']),
+      menuItems() {
+        let menuItems = [
+          { icon: "mdi-login", title: "Login", url: '/login'},
+          { icon: "mdi-account", title: "Registrar", url: '/registrar'}
+        ]
+
+        if(this.userIsAuthenticated){
+          menuItems = [
+            { icon: "mdi-logout", title: "Logout", url: '/'},
+          ]
+        }
+
+        return menuItems
+      },
+      userIsAuthenticated() {
+        return this.loggedUser.id !== undefined
+      }
+    },
+    watch: {
+      loggedUser (value)  {
+        if(value.id !== "" && value.id !== undefined){
+          this.$router.push('/')
+        }
+      },
+      '$route' (to) {
+        this.clearAuthError()
+      },
+    },
+  };
+</script>
