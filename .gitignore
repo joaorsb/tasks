@@ -6,6 +6,12 @@ node_modules
 .env.local
 .env.*.local
 dev.env.js
+.firebaserc
+firebase.json
+firestore.indexes.json
+firestore.rules
+storage.rules
+.firebase
 
 # Log files
 npm-debug.log*

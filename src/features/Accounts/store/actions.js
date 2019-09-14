@@ -1,4 +1,5 @@
 import { auth } from 'firebase'
+import { db } from '../../../main'
 
 const register = async ({commit, state}) => {
     commit('SETLOADING', true)
@@ -9,9 +10,9 @@ const register = async ({commit, state}) => {
             const newUser = {
                 id: response.user.uid,
                 name: state.user.name,
-                password: '',
                 email: response.user.email
             }
+            db.collection('users').add(newUser)
             commit('SETUSER', newUser )
             commit('SETLOADING', false)
         }
@@ -32,9 +33,15 @@ const login = async ({commit, state}) => {
         response => {
             const loggedUser = {
                 id: response.user.uid,
-                password: '',
                 email: response.user.email
             }
+            db.collection('users').where('email', '==',loggedUser.email).get().then(
+                snapshot => {
+                    snapshot.forEach(doc => {
+                        loggedUser.name =doc.data().name
+                    })
+                }
+            )
             commit('LOGINUSER', loggedUser)
             commit('SETLOADING', false)
         }
@@ -55,9 +62,14 @@ const clearAuthError = ({ commit }) => {
     commit('CLEARAUTHERROR')
 }
 
+const clearUser = ({commit}) => {
+    commit('CLEARUSER')
+}
+
 export default {
     register,
     login,
     setLoading,
-    clearAuthError
+    clearAuthError,
+    clearUser
 }

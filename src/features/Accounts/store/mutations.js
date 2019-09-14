@@ -18,10 +18,20 @@ const CLEARAUTHERROR = (state) => {
     state.authError = null
 }
 
+const CLEARUSER = (state) => {
+    state.user = {
+        id: undefined,
+        name: undefined,
+        email: undefined,
+        password: ''
+    }
+}
+
 export default {
     SETUSER,
     LOGINUSER,
     SETLOADING,
     SETAUTHERROR,
     CLEARAUTHERROR,
+    CLEARUSER,
 }

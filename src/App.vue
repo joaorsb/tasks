@@ -77,7 +77,7 @@
       navBarMenu: false,
     }),
     methods: {
-      ...mapActions('Accounts', ['clearAuthError']),
+      ...mapActions('Accounts', ['clearAuthError', ]),
     },
     computed: {
       ...mapGetters('Accounts', ['loggedUser', 'authError']),
@@ -89,7 +89,7 @@
 
         if(this.userIsAuthenticated){
           menuItems = [
-            { icon: "mdi-logout", title: "Logout", url: '/'},
+            { icon: "mdi-logout", title: "Logout", url: '/logout'},
           ]
         }
 

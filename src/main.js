@@ -30,3 +30,4 @@ new Vue({
     firebase.initializeApp(firebaseConfig)
   }
 }).$mount('#app')
+export const db = firebase.firestore()
