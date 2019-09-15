@@ -7,7 +7,7 @@ export default {
         email: undefined,
         password: ''
     },
-    token: "",
+    token: null,
     isLoading: false,
     authError: null,
     loadingLabel: "Estamos trabalhando...",

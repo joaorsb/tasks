@@ -77,22 +77,24 @@
       navBarMenu: false,
     }),
     methods: {
-      ...mapActions('Accounts', ['clearAuthError', ]),
+      ...mapActions('Accounts', ['clearAuthError', 'setToken']),
     },
     computed: {
       ...mapGetters('Accounts', ['loggedUser', 'authError']),
       menuItems() {
         let menuItems = [
           { icon: "mdi-login", title: "Login", url: '/login'},
-          { icon: "mdi-account", title: "Registrar", url: '/registrar'}
+          { icon: "mdi-account", title: "Registrar", url: '/registrar'},
+          { icon: "mdi-home", title: "Home", url: '/'}
         ]
 
         if(this.userIsAuthenticated){
           menuItems = [
             { icon: "mdi-logout", title: "Logout", url: '/logout'},
+            { icon: "mdi-home", title: "Home", url: '/'},
+            { icon: "mdi-clipboard-list", title: "Tasks", url: '/tasks'}
           ]
         }
-
         return menuItems
       },
       userIsAuthenticated() {
@@ -105,8 +107,10 @@
           this.$router.push('/')
         }
       },
-      '$route' (to) {
-        this.clearAuthError()
+      '$route' () {
+        if(this.authError){
+          this.clearAuthError()
+        }
       },
     },
   };

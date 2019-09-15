@@ -7,13 +7,15 @@ const register = async ({commit, state}) => {
 
     await auth().createUserWithEmailAndPassword(state.user.email, state.user.password).then(
         response => {
+            console.log(response.user)
             const newUser = {
                 id: response.user.uid,
                 name: state.user.name,
                 email: response.user.email
             }
+
             db.collection('users').add(newUser)
-            commit('SETUSER', newUser )
+            localStorage.setItem('token', response.user.refreshToken)
             commit('SETLOADING', false)
         }
     ).catch(
@@ -29,20 +31,9 @@ const login = async ({commit, state}) => {
     commit('SETLOADING', true)
     commit('CLEARAUTHERROR')
 
-    await auth().signInWithEmailAndPassword(state.user.email, state.user.password).then(
-        response => {
-            const loggedUser = {
-                id: response.user.uid,
-                email: response.user.email
-            }
-            db.collection('users').where('email', '==',loggedUser.email).get().then(
-                snapshot => {
-                    snapshot.forEach(doc => {
-                        loggedUser.name =doc.data().name
-                    })
-                }
-            )
-            commit('LOGINUSER', loggedUser)
+
+    auth().signInWithEmailAndPassword(state.user.email, state.user.password).then(
+        () => {
             commit('SETLOADING', false)
         }
     ).catch(
@@ -52,6 +43,7 @@ const login = async ({commit, state}) => {
         }
     ).finally(
     )
+
 }
 
 const setLoading = ({commit, }, payload) => {
@@ -62,8 +54,33 @@ const clearAuthError = ({ commit }) => {
     commit('CLEARAUTHERROR')
 }
 
+const setAuthError = ({ commit }, payload) => {
+    commit('SETAUTHERROR', payload)
+
+}
+
 const clearUser = ({commit}) => {
+    auth().signOut()
     commit('CLEARUSER')
+}
+
+const setToken = ({commit}, payload) => {
+    commit('SETTOKEN', payload)
+}
+
+const setUser = ({commit}, payload) => {
+    db.collection('users').where('email', '==', payload.email).get().then(
+        snapshot => {
+            snapshot.forEach(doc => {
+                payload.name = doc.data().name
+                commit('SETUSER', payload)
+            })
+        }
+    )
+}
+
+const clearToken = ({commit}, payload) => {
+    commit('CLEARTOKEN', payload)
 }
 
 export default {
@@ -71,5 +88,10 @@ export default {
     login,
     setLoading,
     clearAuthError,
-    clearUser
+    setAuthError,
+    clearUser,
+    setToken,
+    clearToken,
+    setUser,
+
 }

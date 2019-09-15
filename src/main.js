@@ -28,6 +28,18 @@ new Vue({
   render: h => h(App),
   created() {
     firebase.initializeApp(firebaseConfig)
+    firebase.auth().onAuthStateChanged((user) => {
+        if(user) {
+          const loggedUser = {
+            id: user.uid,
+            email: user.email,
+            password: ''
+          }
+          this.$store.dispatch('Accounts/setUser', loggedUser)
+          this.$store.dispatch('Accounts/setToken', user.refreshToken)
+        }
+    })
+
   }
 }).$mount('#app')
 export const db = firebase.firestore()

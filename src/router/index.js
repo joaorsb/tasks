@@ -4,6 +4,7 @@ import Home from '@/views/Home.vue'
 import Register from '@/features/Accounts/Register'
 import Login from '@/features/Accounts/Login'
 import Logout from '@/features/Accounts/Logout'
+import AuthGuard from './auth-guard'
 
 Vue.use(Router)
 
@@ -14,7 +15,13 @@ export default new Router({
     {
       path: '/',
       name: 'home',
-      component: Home
+      component: Home,
+    },
+    {
+      path: '/tasks',
+      name: 'tasks',
+      component: Home,
+      beforeEnter: AuthGuard
     },
     {
       path: '/registrar',

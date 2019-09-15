@@ -14,9 +14,14 @@ const loadingLabel = (state) => {
     return state.loadingLabel
 }
 
+const token = (state) => {
+    return state.token
+}
+
 export default {
     authError,
     isLoading,
     loggedUser,
-    loadingLabel
+    loadingLabel,
+    token,
 }

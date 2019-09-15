@@ -1,4 +1,4 @@
-# trello_clone_firebase
+# Tasks management - A VueJS playground to test Vuetify and Firebase SDK integration
 
 ## Project setup
 ```

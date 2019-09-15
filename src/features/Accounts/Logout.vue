@@ -18,10 +18,11 @@
     import { mapActions } from 'vuex'
     export default {
         methods: {
-            ...mapActions('Accounts', ['clearUser'])
+            ...mapActions('Accounts', ['clearUser', 'clearToken'])
         },
         mounted() {
             this.clearUser()
+            this.clearToken()
         }
     }
 </script>
