@@ -1,7 +1,5 @@
 <template>
     <v-container>
-        <loading :show="isLoading" :label="loadingLabel"></loading>
-
         <v-card>
             <v-card-title>
                 Jogos
@@ -21,6 +19,7 @@
                     :sort-desc="[false]"
                     :search="search"
                     class="elevation-1"
+                    loading loading-text="Carregando os jogos..."
             ></v-data-table>
         </v-card>
     </v-container>
@@ -29,13 +28,9 @@
 
 <script>
     import {mapState, mapActions, mapGetters } from 'vuex'
-    import loading from 'vue-full-loading'
 
     export default {
         name: "MatchesList",
-        components: {
-            loading
-        },
         data() {
             return {
                 search: '',
