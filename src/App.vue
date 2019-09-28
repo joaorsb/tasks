@@ -92,7 +92,8 @@
           menuItems = [
             { icon: "mdi-logout", title: "Logout", url: '/logout'},
             { icon: "mdi-home", title: "Home", url: '/'},
-            { icon: "mdi-clipboard-list", title: "Tasks", url: '/tasks'}
+            { icon: "mdi-clipboard-list", title: "Tasks", url: '/tasks'},
+            { icon: "mdi-flag", title: "Matches", url: '/matches'}
           ]
         }
         return menuItems
@@ -104,7 +105,7 @@
     watch: {
       loggedUser (value)  {
         if(value.id !== "" && value.id !== undefined){
-          this.$router.push('/')
+          this.$router.push('/matches')
         }
       },
       '$route' () {

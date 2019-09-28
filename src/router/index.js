@@ -4,6 +4,7 @@ import Home from '@/views/Home.vue'
 import Register from '@/features/Accounts/Register'
 import Login from '@/features/Accounts/Login'
 import Logout from '@/features/Accounts/Logout'
+import MatchesList from '@/features/Matches/MatchesList'
 import AuthGuard from './auth-guard'
 
 Vue.use(Router)
@@ -21,6 +22,12 @@ export default new Router({
       path: '/tasks',
       name: 'tasks',
       component: Home,
+      beforeEnter: AuthGuard
+    },
+    {
+      path: '/matches',
+      name: 'matches',
+      component: MatchesList,
       beforeEnter: AuthGuard
     },
     {
