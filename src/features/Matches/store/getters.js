@@ -3,8 +3,8 @@ import moment from "moment-timezone";
 const matchesList = (state) => {
     return state.matches.map(match => {
 
-        // moment.locale('pt_br')
-        // let date = moment(String(match['markets']['marketStartTime'])).tz("America/Sao_Paulo").format('lll')
+        moment.locale('pt_br')
+        let date = moment(String(match['markets']['marketStartTime'])).tz("America/Sao_Paulo").format('lll')
 
         let over = '-'
         let under = '-'
@@ -15,6 +15,7 @@ const matchesList = (state) => {
         }
         return {
             'marketStartTime': match['markets']['marketStartTime'],
+            'localTime': date,
             'competition': match['markets']['competition'],
             'match': match['markets']['eventName'],
             'homePrice': match['markets']['homeTeam']['odds']['availableToBack'][0]['price']['$numberDouble'],

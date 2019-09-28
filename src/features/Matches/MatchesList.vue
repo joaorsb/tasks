@@ -40,7 +40,8 @@
             return {
                 search: '',
                 headers: [
-                    { text: 'Início da partida', value: 'marketStartTime' },
+                    { text: 'Horário UTC', value: 'marketStartTime' },
+                    { text: 'Início da partida', value: 'localTime' },
                     { text: 'Liga', value: 'competition' },
                     { text: 'Partida', value: 'match' },
                     { text: 'Odd Casa', value: 'homePrice' },
