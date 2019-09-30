@@ -18,9 +18,9 @@ const matchesList = (state) => {
             'localTime': date,
             'competition': match['markets']['competition'],
             'match': match['markets']['eventName'],
-            'homePrice': match['markets']['homeTeam']['odds']['availableToBack'][0]['price']['$numberDouble'],
-            'awayPrice': match['markets']['awayTeam']['odds']['availableToBack'][0]['price']['$numberDouble'],
-            'drawPrice': match['markets']['draw']['odds']['availableToBack'][0]['price']['$numberDouble'],
+            'homePrice': match['markets']['homeTeam']['odds']['availableToBack'][0] !== undefined ? match['markets']['homeTeam']['odds']['availableToBack'][0]['price']['$numberDouble'] : match['markets']['homeTeam']['odds']['availableToLay'][0]['price']['$numberDouble'],
+            'awayPrice': match['markets']['awayTeam']['odds']['availableToBack'][0] !== undefined ? match['markets']['awayTeam']['odds']['availableToBack'][0]['price']['$numberDouble'] : match['markets']['awayTeam']['odds']['availableToLay'][0]['price']['$numberDouble'],
+            'drawPrice': match['markets']['draw']['odds']['availableToBack'][0] !== undefined ? match['markets']['draw']['odds']['availableToBack'][0]['price']['$numberDouble'] : match['markets']['draw']['odds']['availableToLay'][0]['price']['$numberDouble'],
             'overPrice': over,
             'underPrice': under
         }
