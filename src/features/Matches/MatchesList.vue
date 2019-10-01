@@ -6,7 +6,7 @@
                 <div class="flex-grow-1"></div>
                 <v-text-field
                         v-model="search"
-                        append-icon="mdi-search"
+                        append-icon="mdi-magnify"
                         label="Search"
                         single-line
                         hide-details
