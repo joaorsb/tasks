@@ -2,9 +2,8 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from '@/router/index'
 import store from './store/index'
-import moment from 'moment-timezone'
 import vuetify from './plugins/vuetify'
-import * as firebase from 'firebase'
+import { initializeApp, auth, firestore} from 'firebase'
 import * as env from '../dev.env'
 
 Vue.config.productionTip = false
@@ -28,8 +27,8 @@ new Vue({
   vuetify,
   render: h => h(App),
   created() {
-    firebase.initializeApp(firebaseConfig)
-    firebase.auth().onAuthStateChanged((user) => {
+    initializeApp(firebaseConfig)
+    auth().onAuthStateChanged((user) => {
         if(user) {
           const loggedUser = {
             id: user.uid,
@@ -43,4 +42,4 @@ new Vue({
 
   }
 }).$mount('#app')
-export const db = firebase.firestore()
+export const db = firestore()

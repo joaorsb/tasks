@@ -9,7 +9,8 @@ const matchesList = (state) => {
         let over = '-'
         let under = '-'
         if(match['markets']['over_25'] !== undefined &&
-            (match['markets']['over_25']['over']['odds']['availableToBack'].length > 0 )){
+            (match['markets']['over_25']['over']['odds']['availableToBack'].length > 0  &&
+                match['markets']['over_25']['under']['odds']['availableToBack'].length > 0 )){
             over = match['markets']['over_25']['over']['odds']['availableToBack'][0] !== undefined ? match['markets']['over_25']['over']['odds']['availableToBack'][0]['price']['$numberDouble'] : match['markets']['over_25']['over']['odds']['availableToLay'][0]['price']['$numberDouble']
             under = match['markets']['over_25']['under']['odds']['availableToBack'][0] !== undefined ? match['markets']['over_25']['under']['odds']['availableToBack'][0]['price']['$numberDouble'] : match['markets']['over_25']['under']['odds']['availableToLay'][0]['price']['$numberDouble']
         }
